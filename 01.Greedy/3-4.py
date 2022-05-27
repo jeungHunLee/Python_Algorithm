@@ -1,4 +1,4 @@
-# 문제 3-4 1이 될때 까지
+# 1이 될때 까지
 # 나의 답
 n, k = map(int, input().split())
 count = 0

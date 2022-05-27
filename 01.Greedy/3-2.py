@@ -1,4 +1,4 @@
-# 문제 3-2 큰 수의 법칙
+# 큰 수의 법칙
 n, m, k = map(int, input().split())
 a = list(map(int, input().split()))
 a.sort(reverse=True)  # 내림 차순 정렬
