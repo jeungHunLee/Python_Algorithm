@@ -1,6 +1,8 @@
 # 모험가 길드
 n = input()
 data = list(map(int, input().split()))
+data.sort()
+
 count = 0   # 그룹에 속한 인원수
 result = 0  # 그룹의 개수
 
