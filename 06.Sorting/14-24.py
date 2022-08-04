@@ -14,3 +14,10 @@ if n % 2 == 0:
     print(candidates[result.index(min(result))])
 else:
     print(houses[n // 2])
+
+# 예시 풀이
+n = int(input())
+data = list(map(int, input().split()))
+data.sort()
+
+print(data[n-1] // 2)
