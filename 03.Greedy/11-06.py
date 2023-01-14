@@ -1,4 +1,36 @@
 # 무지의 먹방 라이브
+# 내가 푼 풀이
+def solution(food_times, k):
+    if sum(food_times) <= k:
+        return -1
+
+    arr = []
+
+    for i in range(len(food_times)):
+        arr.append((i + 1, food_times[i]))
+
+    arr.sort(key=lambda x: x[1])
+
+    i = 0
+    length = len(arr)
+    sum_time = 0
+    previous = 0
+
+    while True:
+        time = (arr[i][1] - previous) * length
+
+        if sum_time + time > k:
+            break
+
+        sum_time += time
+        previous = arr[i][1]
+        i += 1
+        length -= 1
+
+    arr = sorted(arr[i:], key=lambda x: x[0])
+
+    return arr[(k - sum_time) % length][0]
+
 # 예시 풀이
 import heapq
 
