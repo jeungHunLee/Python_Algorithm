@@ -1,46 +1,48 @@
 # 04-04 (게임 개발)
-import sys
-
 n, m = map(int, input().split())
-a, b, d = map(int, input().split())  # a: 세로 좌표, b: 가로 좌표, d: 방향
+x, y, d = map(int, input().split())
+board = []
+not_visited = [[False for _ in range(m)] for _ in range(n)]    # 방문 여부
 
-mapPosition = []  # 맵 형태를 저장 할 리스트(0: 육지, 1: 바다)
-for _ in range(m):
-    mapPosition.append(list(map(int, sys.stdin.readline().split())))
+for i in range(n):
+    row = list(map(int, input().split()))
+    board.append(row)
+    for j in range(m):
+        if row[j] == 0:
+            not_visited[i][j] = True
+not_visited[x][y] = False    # 현재 위치 방문 처리
 
-passed = [[a, b]]  # 지나간 좌표를 저장 할 리스트(현재 위치 포함)
-count = 0  # 확인한 횟수
+# 북, 동, 남, 서 방향에 대한 좌표
+dx = [-1, 0, 1, 0]
+dy = [0, 1, 0, -1]
 
-# 동,서,남,북 방향 정의
-ma = [-1, 0, 1, 0]
-mb = [0, 1, 0, -1]
-
-# 이동 시작
-while True:
-    d -= 1  # 방향 회전
-    if d == -1:
+turn = 0    # 회전 횟수
+count = 1    # 방문한 개수
+while True:    # 이동 시작
+    d -= 1
+    if d < 0:
         d = 3
+    turn += 1
 
-    A = a + ma[d]  # a좌표 이동
-    B = b + mb[d]  # b좌표 이동
-    count += 1
+    nx = x + dx[d]
+    ny = y + dy[d]
 
-    if mapPosition[A][B] == 1 or [A, B] in passed:  # 확인 후 1(바다)이거나 지나간 좌표 제외
-        if count == 4:  # 동,서,남,북 모두 이동 못하는 경우
-            a -= ma[d]  # 뒤로 이동
-            b -= mb[d]
-            count = 0
-            if mapPosition[a][b] == 1:  # 뒤로 이동 한 위치가 1(바다)인 경우 종료
-                break
-        else:
-            continue
+    if 0 <= nx < n and 0 <= ny < m:
+        if not_visited[nx][ny]:
+            x = nx
+            y = ny
+            not_visited[x][y] = False
+            turn = 0
+            count += 1
 
-    else:
-        a, b = A, B  # 확인 후 0이면 실제로 이동
-        passed.append([a, b])
-        count = 0
+    if turn == 4:    # 네 방향 모두 확인 했다면 뒤로 이동
+        x -= dx[d]
+        y -= dy[d]
+        if board[x][y] == 1:    # 뒤가 바다면 이동 종료
+            break
+        turn = 0
 
-print(len(passed))
+print(count)
 
 #  예시 답안
 n, m = int(input().split())
