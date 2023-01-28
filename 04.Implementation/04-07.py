@@ -1,4 +1,21 @@
 # 04-07(문자열 압축)
+# 나의 풀이
+def solution(s):
+    answer = len(s)
+    for i in range(1, len(s) // 2 + 1):
+        compress, tmp, count = "", "", 1
+        for j in range(0, len(s), i):
+            if s[j:j + i] == tmp:
+                count += 1
+            else:
+                compress += str(count) + tmp if count > 1 else tmp
+                tmp = s[j:j + i]
+                count = 1
+        compress += str(count) + tmp if count > 1 else tmp
+        answer = min(answer, len(compress))
+    return answer
+
+# 예시 풀이
 def solution(s):
     answer = len(s)
 
