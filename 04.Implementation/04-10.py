@@ -1,4 +1,39 @@
 # 04-10 (기둥과 보 설치)
+# 나의 풀이
+def solution(n, build_frame):
+    answer = []
+    for i in range(len(build_frame)):
+        tmp = build_frame[i]
+        if tmp[3] == 1:  # 설치
+            answer.append(tmp[:3])
+            if not check(answer):
+                answer.remove(tmp[:3])
+        else:  # 제거
+            answer.remove(tmp[:3])
+            if not check(answer):
+                answer.append(tmp[:3])
+
+    answer.sort(key=lambda x: (x[0], x[1], x[2]))
+    return answer
+
+
+def check(arr):
+    result = True
+    for x, y, kind in arr:
+        if kind == 0:  # 기둥인 경우
+            if y == 0 or [x - 1, y, 1] in arr or [x, y, 1] in arr or [x, y - 1, 0] in arr:
+                continue
+            else:
+                result = False
+        else:  # 보인 경우
+            if [x, y - 1, 0] in arr or [x + 1, y - 1, 0] in arr or ([x - 1, y, 1] in arr and [x + 1, y, 1] in arr):
+                continue
+            else:
+                result = False
+
+    return result
+
+# 예시 풀이
 def solution(n, build_frame):
     answer = []
     for target in build_frame:
